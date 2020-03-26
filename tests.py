@@ -16,6 +16,7 @@ class UserTestCase(TestCase):
     def setUp(self):
         """ Add sample user """
 
+        db.session.rollback()
         User.query.delete()
 
         user = User(first_name="Test", last_name="User")
@@ -27,7 +28,7 @@ class UserTestCase(TestCase):
         self.user_id = user.id
 
     def tearDown(self):
-        """Clean up any fouled transaction."""
+        """ Clean up any fouled transaction. """
 
         db.session.rollback()
 
@@ -68,6 +69,15 @@ class UserTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn('Jane Smith', html)
             self.assertIn(f'<a href="/users/{self.user_id}">', html)
+    
+    def test_empty_edit_user(self):
+        """ Test editing a user """
+
+        with app.test_client() as client:
+            resp = client.post(f"/users/{self.user_id}/edit", follow_redirects=True)
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 404)
 
     def test_delete_user(self):
         """ Test deleting a user """
@@ -77,6 +87,7 @@ class UserTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
+<<<<<<< HEAD
             self.assertIn('id="user-list-id"', html)
             self.assertNotIn('Test User', html) 
             self.assertNotIn(f'<a href="/users/{self.user_id}">', html)
@@ -137,15 +148,10 @@ class UserTestCase(TestCase):
 #         with app.test_client() as client:
 #             resp = client.get(f"/{self.pet_id}")
 #             html = resp.get_data(as_text=True)
+=======
+            self.assertNotIn(f'<a href="/users/{self.user_id}">', html)
+>>>>>>> 1194295a319ba8324028aaaacfe1d7e08e332544
 
-#             self.assertEqual(resp.status_code, 200)
-#             self.assertIn('<h1>TestPet</h1>', html)
 
-#     def test_add_pet(self):
-#         with app.test_client() as client:
-#             d = {"name": "TestPet2", "species": "cat", "hunger": 20}
-#             resp = client.post("/", data=d, follow_redirects=True)
-#             html = resp.get_data(as_text=True)
 
-#             self.assertEqual(resp.status_code, 200)
-#             self.assertIn("<h1>TestPet2</h1>", html)
+    

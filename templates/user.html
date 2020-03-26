@@ -10,7 +10,16 @@
 <br>
 <br>
 <form action="/users/{{ user.id }}/delete" method="POST">
-  <button class= "btn btn-primary">Delete</button>
+  <button class= "btn btn-danger">Delete</button>
 </form>
+<br>
 
+<ul id="post-list">
+  {% for post in user.posts %}
+  <li><a href="/posts/{{ post.id }}">{{ post.title }}</a></li>
+  {% endfor %}
+</ul>
+<form>
+  <button class="btn btn-primary" formmethod="get" formaction="/users/{{ user.id }}/posts/new">Add Post</button>
+</form>
 {% endblock %}
