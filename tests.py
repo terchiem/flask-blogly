@@ -77,7 +77,10 @@ class UserTestCase(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertNotIn('Test User', html) # TODO: more specific test (like element id)
+            self.assertIn('id="user-list-id"', html)
+            self.assertNotIn('Test User', html) 
+            self.assertNotIn(f'<a href="/users/{self.user_id}">', html)
+
 
 
     # TODO: also test negatives
