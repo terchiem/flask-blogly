@@ -43,10 +43,11 @@ def create_user():
 
     first_name = request.form.get('first_name')
     last_name = request.form.get('last_name')
-    image_URL = request.form.get('image_url')
-    image_URL = image_URL if image_URL else None
+    image_URL = request.form.get('image_url') or None
 
-    new_user = User(first_name=first_name, last_name=last_name, image_url=image_URL)
+    new_user = User(first_name=first_name, 
+                    last_name=last_name, 
+                    image_url=image_URL)
     db.session.add(new_user)
     db.session.commit()
 
@@ -61,7 +62,7 @@ def show_user(user_id):
     return render_template('/user.html',
                             user=user)
 
-@app.route('/users/<user_id>/edit')
+@app.route('/users/<int:user_id>/edit')
 def show_edit_form(user_id):
     """ show user edit form """
     user = User.query.get_or_404(user_id)
@@ -69,7 +70,7 @@ def show_edit_form(user_id):
     return render_template('/edit.html',
                             user=user)
 
-@app.route('/users/<user_id>/edit', methods=['POST'])
+@app.route('/users/<int:user_id>/edit', methods=['POST'])
 def edit_user(user_id):
     """ edit user. """
 
@@ -88,7 +89,7 @@ def edit_user(user_id):
 
     return redirect('/users')
 
-@app.route('/users/<user_id>/delete', methods=['POST'])
+@app.route('/users/<int:user_id>/delete', methods=['POST'])
 def delete_user(user_id):
     """ delete user. """
 

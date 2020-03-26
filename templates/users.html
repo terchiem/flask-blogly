@@ -3,7 +3,8 @@
 {% block title %}User List{% endblock %}
 
 {% block content %}
-<ul>
+<h1>User List</h1>
+<ul id="user-list-id">
   {% for user in users %}
     <li>
       <a href="/users/{{ user.id }}">
