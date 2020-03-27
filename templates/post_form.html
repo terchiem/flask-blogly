@@ -13,7 +13,19 @@
     <label for="content">Content</label>
     <textarea name="content" id="content" cols="30" rows="3"></textarea>
   </p>
-  <button>Add</button>
-  <button formaction="/users/{{ user.id }}" formmethod="GET">Cancel</button>
+
+  {% for tag in tags %}
+    <div>
+      <input type="checkbox" name="tags" id="{{ tag.name }}" value="{{ tag.name }}">
+      <label for="{{ tag.name }}">{{ tag.name }}</label>
+    </div>
+  {% endfor %}
+
+  <br> 
+
+  <button class="btn btn-primary">Add</button>
+  <button class="btn btn-light"
+          formaction="/users/{{ user.id }}" 
+          formmethod="GET">Cancel</button>
 </form>
 {% endblock %}

@@ -8,6 +8,15 @@
 <p>{{ post.content }}</p>
 
 <p>By {{ user.first_name }} {{ user.last_name }}</p>
+
+<span><b>Tags:</b></span>
+{% for tag in tags %}
+  <a class="badge badge-primary" href="/tags/{{ tag.id }}">{{ tag.name }}</a>
+{% endfor %}
+
+<br>
+<br>
+
 <form action="/posts/{{ post.id }}/delete" method="POST">
   <button class="btn btn-primary" formaction="/posts/{{ post.id }}/edit" formmethod="get">Edit</button>
   <button class= "btn btn-primary">Delete</button>
